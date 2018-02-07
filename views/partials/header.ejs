@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>justjs: <%= blocks.title %></title>
+  <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+  <link href="/bower_components/font-awesome/web-fonts-with-css/css/fontawesome.min.css" rel="stylesheet" />
+</head>
+
+<body class="<%- blocks.bodyClass %>">
+	<div class="navbar navbar-fixed-top">
+	    <div class="navbar-inner">
+	      <div class="container">
+	        <a class="brand" href="/">justjs</a>
+	      </div>
+	    </div>
+  	</div>
+  	
+  	<section class="container">
+  		<h1><%=blocks.title%></h1>
+    	<%-body -%>
+  	</section>
+<footer>
+    <%-blocks.footer%>
+</footer>
+
+<body>
+
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+</html>
