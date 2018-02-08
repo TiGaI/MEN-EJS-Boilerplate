@@ -6,24 +6,30 @@
   <link href="/bower_components/font-awesome/web-fonts-with-css/css/fontawesome.min.css" rel="stylesheet" />
 </head>
 
-<body class="<%- blocks.bodyClass %>">
 	<div class="navbar navbar-fixed-top">
 	    <div class="navbar-inner">
 	      <div class="container">
-	        <a class="brand" href="/">justjs</a>
+          <% if(typeof user != 'undefined' && user) { %>
+            <a href="/logout" class="btn btn-default btn-sm">Logout</a>    
+          <% } else { %>
+            <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Login</a>
+            <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Signup</a>
+            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+            <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>    
+          <% } %>
 	      </div>
 	    </div>
   	</div>
   	
   	<section class="container">
-  		<h1><%=blocks.title%></h1>
     	<%-body -%>
   	</section>
+
+
 <footer>
     <%-blocks.footer%>
 </footer>
 
-<body>
 
 <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
 </html>

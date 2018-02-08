@@ -1,26 +1,21 @@
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true,
-    trim: true
   },
   username: {
     type: String,
     unique: true,
     required: true,
-    trim: true
   },
   password: {
     type: String,
     required: true,
-  },
-  passwordConf: {
-    type: String,
-    required: true,
-  },
+  }
   },
   { timestamps: true }
 );
@@ -51,45 +46,55 @@ var userSchema = new mongoose.Schema({
   // },
   // joinActivities: [{type: mongoose.Schema.Types.ObjectId, ref: 'Activity'}],
   // createdActivities: [{type: mongoose.Schema.Types.ObjectId, ref: 'Activity'}],
+  // activityLatitude: {
+  //   type: Number,
+  //   required: true
+  // },
+  // activityLongitude: {
+  //   type: Number,
+  //   required: true
+  // },
+  // activityCategory:{
+  //   type: String,
+  //   required: true
+  // },
+  // activityCapacity: {
+  //   type: Number,
+  //   required: true
+  // },
+  // activityDuration: {
+  //   type: Number,
+  //   required: true
+  // },
+  // activityStartTime: {
+  //   type: Date,
+  //   required: true
+  // },
+  // checkInUser: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 
-var activitySchema = new mongoose.Schema({
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
+
+var questionSchema = new mongoose.Schema({
   //How can we keep track of User Activity?
-  activityCreator: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  activityTitle: {
+  questionName: {
     type: String,
     required: true
   },
-  activityImages: String,
-  activityDescription: {
+  questionTitle: {
+    type: String,
+    required: true
+  },
+  questionAnswer: {
     type: String,
     default: "",
     required: true
   },
-  activityLatitude: {
-    type: Number,
-    required: true
-  },
-  activityLongitude: {
-    type: Number,
-    required: true
-  },
-  activityCategory:{
-    type: String,
-    required: true
-  },
-  activityCapacity: {
-    type: Number,
-    required: true
-  },
-  activityDuration: {
-    type: Number,
-    required: true
-  },
-  activityStartTime: {
-    type: Date,
-    required: true
-  },
-  checkInUser: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 },
 { timestamps: true }
 );
@@ -115,11 +120,11 @@ var notificationsSchema = new mongoose.Schema({
 
 
 var User = mongoose.model("User", userSchema);
-var Activity = mongoose.model("Activity", activitySchema);
+var Question = mongoose.model("Question", questionSchema);
 var userNotification = mongoose.model("userNotification", notificationsSchema);
 
 module.exports = {
   User: User,
-  Activity: Activity,
+  Question: Question,
   userNotification: userNotification
 };

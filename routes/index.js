@@ -1,15 +1,22 @@
-var express = require('express');
-var router = express.Router();
-var ejs = require('ejs');
+var Question = require('../models/models').Question;
 
-
+module.exports = function(app) {
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render("index", {
-  });
-});
+	app.get('/', function(req, res, next) {
+		res.render('index.ejs', {questions: {}})
+	});
 
 
-
-
-module.exports = router;
+};
+	  // Question.find({}, function(err, questions){
+	  // 	if(err){
+	  // 		  res.render('index.ejs', { message: req.flash(err) });
+	  // 	}else{
+	  // 		if(questions){
+	  // 			res.render('index.ejs', {questions: questions})
+	  // 		}else{
+	  // 			res.render('index.ejs', {questions: {}})
+	  // 		}
+	  		
+	  // 	}
+	  // })

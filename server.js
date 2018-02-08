@@ -1,19 +1,18 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session      = require('express-session');
+
 var helmet = require('helmet');
-var index = require('./routes/index');
-var users = require('./routes/users');
 var flash    = require('connect-flash');
 var passport = require('passport');
 
 require('./routes/passport')(passport);
 
 var app = express();
-const http = require('http').Server(app);
+var http = require('http').Server(app);
 
 const mongoose = require('mongoose');
 var connect = process.env.MONGODB_URI;
@@ -40,8 +39,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-
+//routes
+require('./routes/index.js')(app);
 require('./routes/users.js')(app, passport);
 
 // catch 404 and forward to error handler
